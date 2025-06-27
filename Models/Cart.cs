@@ -23,11 +23,18 @@
             }
         }
 
-        public void RemoveItem(CartItem item) { 
-        
-           if(CartItems.Exists(i => i.Item.Id == item.Item.Id))
+        public void RemoveItem(int itemId) {
+
+            var item = CartItems
+                 .SingleOrDefault(c => c.Item.Id == itemId);
+
+            if(item?.Quantity <= 0)
             {
-               
+                CartItems.Remove(item);
+            }
+            else if(item!= null)
+            {
+                item.Quantity -= 1;
             }
 
         }
